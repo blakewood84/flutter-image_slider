@@ -82,6 +82,7 @@ FutureOr<void> showImageDialog({
             Container(
               constraints: BoxConstraints(
                 maxHeight: size.height * 0.6,
+                maxWidth: size.width,
               ),
               child: Swiper(
                 itemCount: imageUrls.length,
@@ -114,35 +115,38 @@ FutureOr<void> showImageDialog({
                   },
                 ),
                 itemBuilder: (context, index) {
-                  return Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      Image.network(
-                        imageUrls.elementAt(index),
-                        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                          return Container(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                        Flexible(
+                          child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 1,
                                 color: Colors.red,
                               ),
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [child],
+                            child: Image.network(
+                              imageUrls.elementAt(index),
+                              fit: BoxFit.fill,
                             ),
-                          );
-                        },
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 20,
-                        child: Icon(
-                          Icons.clear,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 },
               ),
