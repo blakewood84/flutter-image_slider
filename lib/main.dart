@@ -117,11 +117,22 @@ FutureOr<void> showImageDialog({
                   return Stack(
                     alignment: AlignmentDirectional.center,
                     children: [
-                      SizedBox(
-                        height: size.height * 0.6,
-                        child: Image.network(
-                          imageUrls.elementAt(index),
-                        ),
+                      Image.network(
+                        imageUrls.elementAt(index),
+                        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.red,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [child],
+                            ),
+                          );
+                        },
                       ),
                       Positioned(
                         top: 0,
